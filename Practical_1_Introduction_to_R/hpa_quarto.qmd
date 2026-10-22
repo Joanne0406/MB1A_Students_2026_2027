@@ -1,0 +1,26 @@
+---
+title: "Exercise - Analysis in Quarto"
+author: "Joanne D'Souza"
+---
+
+I will be finding the total number of genes in the forebrain for a human, pig and mouse which show reginally elevated levels of expression compared with the rest of the brain. 
+
+
+```{r}
+x <- sum(180, 83, 57, 110)
+print(paste("For a human brain, the total number of genes showing regionally elevated expression is:", x))
+
+y <- sum(109, 157, 31, 45)
+print(paste("For a pig brain, the total number of genes showing regionally elevated expression is:", y))
+
+z <- sum(55, 185, 60, 98)
+print(paste("For a mouse brain, the total number of genes showing regionally elevated expression is:", z))
+```
+
+Hence, the specie with the greatest regionally elevated expression in the forebrain are humans. 
+
+```{r}
+# This code calculates the sum of two numbers
+1 + 9
+```
+
