@@ -1,5 +1,5 @@
 ---
-title: "-Practical 1: Part 3"
+title: "-Practical 1: Part 3 and 4"
 author: "Joanne D'Souza"
 ---
 Exercise 1: Rounding
@@ -52,4 +52,28 @@ print(name_1)
 
 ```
 
+PART 4
+
+```{r}
+library(fortunes)
+library(tidyverse)
+library(gt)
+```
+
+Exercise 1: Vectors
+```{r}
+name_vector <- c(name_1, name_2)
+treated_vector <- c(treated_1, treated_2)
+before_vector <- c(cells_before_1, cells_before_2)
+after_vector <- c(cells_after_1, cells_after_2)
+
+print(name_vector)
+```
+
+Exercise 2: Indexing
+```{r}
+all_my_pets <- c("dog", "horse", "guinea pig", "chicken", "cat")
+
+print(all_my_pets[4])
+```
 
