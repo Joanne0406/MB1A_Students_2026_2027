@@ -1,0 +1,89 @@
+---
+title: "Practical 2 Worked examples"
+---
+
+Exercise 1: Examining the source
+
+x-axis label: longitude
+y-axis label: latitude
+
+The colours represent each of the eight populations tracked and the routes they migrated respectively
+
+The map is a Mercator projection and displayed locations are as follows: breeding site (circles), Iberian peninsula stopover (filled downward triangles), westernmost location during autumn migration (open triangles), nonbreeding area (squares), and post-Saharan crossing stopover (filled upward triangles)
+
+Exercise 2: Examining the data
+
+The longitude of Moscow is 36.7 degrees
+
+```{r}
+library(gt)
+library(tidyverse)
+library(maps)
+
+```
+
+Exercise 3: Read the first CSV file
+
+```{r}
+
+bird_breeding_sites <- read.csv("data/breeding_site_locations.csv")
+
+gt(bird_breeding_sites)
+
+```
+
+
+```{r}
+colnames(bird_breeding_sites)
+
+
+glimpse(bird_breeding_sites)
+
+```
+
+Exercise 4: Read the second CSV file
+
+```{r}
+
+migration <- read_csv("data/migratory_connectivity_dataset.csv")
+
+gt(head(migration))
+
+```
+
+
+```{r}
+
+# rows and colums respectively in migration data set
+print(dim(migration))
+
+# data type of Tag
+#character 
+
+# data type of Birth
+#integer
+
+```
+
+Exercise 5: Using the pipe operator
+
+```{r}
+
+input_vec <- c(5, -10, 4, -3)
+
+mean_vec <- input_vec |> mean() |> abs() |> round()
+
+print(mean_vec)
+
+```
+
+Exercise 6: Select, de-duplicate and rename
+
+
+```{r}
+
+bird_migration_selected <- migration |> select(Site, winterLongitude, winterLatitude, pslon, pslat, iblon, iblat, awestlon, awestlat) |> distinct() |> rename(Winter_Longitude = winterLongitude, Winter_Latitude = winterLatitude, Stopover_Longitude = pslon, Stopover_Latitude = pslat, Iberian_Longitude = iblon, Iberian_Latitude = iblat, Westmost_Longitude = awestlon, Westmost_Latitude = awestlat)
+
+```
+
+
