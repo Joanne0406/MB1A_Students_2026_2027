@@ -77,3 +77,22 @@ all_my_pets <- c("dog", "horse", "guinea pig", "chicken", "cat")
 print(all_my_pets[4])
 ```
 
+Exercise 3: Creating a data frame
+```{r}
+
+my_table <- tibble(
+  cell_ID = c("CX1" , "CX2"),
+  treated = c("TRUE" , "FALSE"),
+  num_cells_before = c("5415" , "8123"),
+  num_cells_after = c("1432" , "7543")
+)
+
+gt(my_table)
+
+```
+
+Exercise 4: Examining a CSV file
+
+The temperature is 17.8 degrees C
+
+
