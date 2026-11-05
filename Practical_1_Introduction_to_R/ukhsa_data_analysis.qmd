@@ -1,0 +1,42 @@
+---
+title: "ukhsa_data_analysis.qmd"
+author: "Joanne D'Souza"
+---
+
+```{r}
+library(tidyverse)
+library(gt)
+
+```
+
+Loading CSV file
+
+```{r}
+antibiotics <- read_csv("data/ukhsa-chart-download.csv")
+
+gt(head(antibiotics))
+
+```
+
+My data set is for the rate of access so consumtion of antiobiotics between the years 2018 and 2026
+
+
+Exercise: Plotting public health data 
+
+```{r}
+
+antibiotics <- read_csv("data/ukhsa-chart-download.csv")
+
+antibiotics <- antibiotics|> group_by(year) |> mutate(mean_consumption = mean(metric_value)) |> distinct(year, mean_consumption)
+
+ggplot(antibiotics, aes(
+  x = year,
+  y = mean_consumption
+)) +
+  geom_line(colour = "blue") +
+  xlab("Year") +
+  ylab("standardised consumption") +
+  ggtitle("Access to consumtion of antibiotics per year")
+
+```
+
