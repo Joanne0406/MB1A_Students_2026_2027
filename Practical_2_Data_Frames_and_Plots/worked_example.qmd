@@ -84,6 +84,88 @@ Exercise 6: Select, de-duplicate and rename
 
 bird_migration_selected <- migration |> select(Site, winterLongitude, winterLatitude, pslon, pslat, iblon, iblat, awestlon, awestlat) |> distinct() |> rename(Winter_Longitude = winterLongitude, Winter_Latitude = winterLatitude, Stopover_Longitude = pslon, Stopover_Latitude = pslat, Iberian_Longitude = iblon, Iberian_Latitude = iblat, Westmost_Longitude = awestlon, Westmost_Latitude = awestlat)
 
+bird_breeding_selected <- bird_breeding_sites |>
+  select(Site, Longitude, Latitude) |>
+  distinct()
+
 ```
+
+Exercise 7: Filtering a data frame
+
+```{r}
+
+bird_breeding_sites_no_spain <- bird_breeding_selected |> filter(Site != "Spain") |> rename(Breeding_Longitude = Longitude, Breeding_Latitude = Latitude)
+
+bird_migration_selected_no_spain <- bird_migration_selected |>filter(Site != "Spain")
+
+view(bird_breeding_sites_no_spain)
+view(bird_migration_selected_no_spain)
+```
+
+
+
+Part 2: 
+
+Exercise 1:
+
+```{r}
+
+bird_migration_grouped <- bird_migration_selected_no_spain|> group_by(Site)
+
+bird_migration_summary <- bird_migration_grouped |> summarise(
+  Median_Stopover_Latitude = median(Stopover_Latitude, na.rm = TRUE),
+  Median_Stopover_Longitude = median(Stopover_Longitude, na.rm = TRUE),
+  Median_Iberian_Latitude = median(Iberian_Latitude, na.rm = TRUE),
+  Median_Iberian_Longitude = median(Iberian_Longitude, na.rm = TRUE),
+  Median_Westmost_Latitude = median(Westmost_Latitude, na.rm = TRUE),
+  Median_Westmost_Longitude = median(Westmost_Longitude, na.rm = TRUE),
+  Median_Winter_Latitude = median(Winter_Latitude, na.rm = TRUE),
+  Median_Winter_Longitude = median(Winter_Longitude, na.rm = TRUE)
+) |> rename(Stopover_Latitude = Median_Stopover_Latitude, Stopover_Longitude = Median_Stopover_Longitude, Iberian_Latitude = Median_Iberian_Latitude, Iberian_Longitude = Median_Iberian_Longitude, Westmost_Latitude = Median_Westmost_Latitude, Westmost_Longitude = Median_Westmost_Longitude, Winter_Latitude = Median_Winter_Latitude, Winter_Longitude = Median_Winter_Longitude)
+
+view(bird_migration_summary)
+
+```
+
+
+Exercise 2: Joining Data Frames
+
+```{r}
+
+bird_breeding_corrected <- bird_breeding_sites_no_spain |> filter()
+
+combined_bird_data <- full_join(bird_breeding_sites_no_spain, bird_migration_summary)
+
+view(combined_bird_data)
+
+combined_bird_piv <- combined_bird_data |>
+  pivot_longer(
+    cols = ends_with(c("_Longitude", "_Latitude")),
+    names_sep = "_",
+    names_to = c("Location_Type", ".value")
+  )
+
+gt(combined_bird_piv)
+
+```
+
+Exercise 3: Subset data
+
+```{r}
+
+spring_variable <- c("Breeding", "Stopover", "Winter")
+
+autumn_variable <- c("Breeding", "Iberian", "Westmost", "Winter")
+
+spring_data <- combined_bird_piv |> filter(Location_Type %in% spring_variable)
+
+autumn_data <- combined_bird_piv |> filter(Location_Type %in% autumn_variable)
+
+write_csv(spring_data, "output/birds_spring.csv")
+write_csv(autumn_data, "output/birds_autumn.csv")
+
+```
+
+
 
 
